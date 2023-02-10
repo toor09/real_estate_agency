@@ -10,6 +10,7 @@ class FlatAdmin(admin.ModelAdmin):
     list_filter = ('new_building', 'has_balcony', 'rooms_number',)
     search_fields = ('town', 'address', 'owner',)
     readonly_fields = ('created_at',)
+    raw_id_fields = ('like',)
 
 
 @admin.register(Complaint)
