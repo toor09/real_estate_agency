@@ -6,11 +6,15 @@ from phonenumber_field.phonenumber import PhoneNumber
 def fill_owner_pure_phone_in_flats(apps, schema_editor):
     flat = apps.get_model('property', 'Flat')
     for flat in flat.objects.all():
-        flat.owner_pure_phone = PhoneNumber.from_string(
+        number_phone = PhoneNumber.from_string(
             flat.owners_phonenumber,
             region='RU'
         )
-        flat.save()
+        if number_phone.is_valid():
+            flat.owner_pure_phone = number_phone
+            flat.save()
+        else:
+            print(f"\nНомер {flat.owners_phonenumber} не валидный для владельца с ID={flat.pk}")
 
 
 def move_backward(apps, schema_editor):
