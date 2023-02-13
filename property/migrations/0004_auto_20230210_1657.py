@@ -7,18 +7,19 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 
 def fill_new_building_in_flats(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     flat = apps.get_model('property', 'Flat')
-    for flat in flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = True
-            flat.save()
+    new_building_flats = flat.objects.filter(construction_year__gte=2015)
+    old_building_flats = flat.objects.filter(construction_year__lte=2014)
+    if new_building_flats.exists():
+        new_building_flats.update(new_building=True)
+    if old_building_flats.exists():
+        old_building_flats.update(new_building=False)
 
 
 def move_backward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     flat = apps.get_model('property', 'Flat')
-    for flat in flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = None
-            flat.save()
+    flats = flat.objects.all()
+    if flats.exists():
+        flats.update(new_building=None)
 
 
 class Migration(migrations.Migration):

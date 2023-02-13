@@ -8,7 +8,8 @@ from phonenumber_field.phonenumber import PhoneNumber
 
 def fill_owner_pure_phone_in_flats(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     flat = apps.get_model('property', 'Flat')
-    for flat in flat.objects.all():
+    flats = flat.objects.all()
+    for flat in flats.iterator():
         number_phone = PhoneNumber.from_string(
             flat.owners_phonenumber,
             region='RU'
@@ -22,7 +23,8 @@ def fill_owner_pure_phone_in_flats(apps: Apps, schema_editor: BaseDatabaseSchema
 
 def move_backward(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     flat = apps.get_model('property', 'Flat')
-    for flat in flat.objects.all():
+    flats = flat.objects.all()
+    for flat in flats.iterator():
         flat.owner_pure_phone = None
         flat.save()
 

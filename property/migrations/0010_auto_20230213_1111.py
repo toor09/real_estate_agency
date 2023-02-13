@@ -8,7 +8,8 @@ from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 def add_owners_from_flat_model(apps: Apps, schema_editor: BaseDatabaseSchemaEditor) -> None:
     flat_owners = apps.get_model('property', 'Flat')
     owner = apps.get_model('property', 'Owner')
-    for flat_owner in flat_owners.objects.all():
+    flat_owners = flat_owners.objects.all()
+    for flat_owner in flat_owners.iterator():
         owner.objects.get_or_create(
             owner=flat_owner.owner,
             owners_phonenumber=flat_owner.owners_phonenumber,
