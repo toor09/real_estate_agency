@@ -1,17 +1,19 @@
-from django.shortcuts import render
+from typing import Optional, Union
 
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 
 from property.models import Flat
 
 
-def format_price(value):
+def format_price(value: Union[int, float]) -> Optional[int]:
     try:
         return int(value)
     except (TypeError, ValueError):
         return None
 
 
-def show_flats(request):
+def show_flats(request: HttpRequest) -> HttpResponse:
     town = request.GET.get('town')
     min_price = format_price(request.GET.get('min_price'))
     max_price = format_price(request.GET.get('max_price'))

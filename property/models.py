@@ -1,6 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
@@ -53,7 +53,7 @@ class Flat(models.Model):
         related_name='flat_likes',
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.town}, {self.address} ({self.price}р.)'
 
 
@@ -76,7 +76,7 @@ class Complaint(models.Model):
         null=False
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'<{self.user.username}> {self.complaint_flat.address}'
 
 
@@ -95,5 +95,5 @@ class Owner(models.Model):
         related_name='owners',
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'<{self.owner}> {self.owner_pure_phone}'

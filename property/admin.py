@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Flat, Complaint, Owner
+from .models import Complaint, Flat, Owner
 
 
 class FlatsInline(admin.TabularInline):
