@@ -47,7 +47,7 @@ class Flat(models.Model):
         blank=True,
         db_index=True)
     new_building = models.BooleanField('Новостройка', blank=True, null=True)
-    like = models.ManyToManyField(
+    likes = models.ManyToManyField(
         User,
         verbose_name='Кто лайкнул',
         related_name='flat_likes',

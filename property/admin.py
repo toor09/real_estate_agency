@@ -25,7 +25,8 @@ class FlatAdmin(admin.ModelAdmin):
     list_filter = ('new_building', 'has_balcony', 'rooms_number',)
     search_fields = ('pk', 'town', 'address',)
     readonly_fields = ('created_at',)
-    raw_id_fields = ('like',)
+    raw_id_fields = ('likes',)
+    list_per_page = 250
 
 
 @admin.register(Complaint)
